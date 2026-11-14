@@ -9,6 +9,7 @@ Self-paced, week-by-week AI courses. Every lesson has a diagram, a runnable demo
 | `/` | AAA Academy home page, listing every course | |
 | `/gen-ai-fundamentals/` | Gen AI Fundamentals: how LLMs work inside, from tokens and attention to agents and agent frameworks. Capstone: ResearchMate | 14 weeks (week 0 to 13) |
 | `/shipgrade-ai/` | ShipGrade AI: taking AI from a notebook demo to a production-grade system. Capstone: HelpDesk Pilot | 6 weeks |
+| `/gen-ai-product-management/` | Generative AI in Product Management: AI-assisted product decisions for PMs and product owners, with a worked business case, LMS prototype, practice labs, 28 prompts and spoken trainer notes. Capstone: portfolio review | 6 modules (about 4½ hours) |
 
 ## Repository layout
 
@@ -16,6 +17,9 @@ Self-paced, week-by-week AI courses. Every lesson has a diagram, a runnable demo
 index.html                      Home page (built from src/hub.html)
 gen-ai-fundamentals/index.html  Gen AI Fundamentals (built from src/gen-ai-fundamentals/)
 shipgrade-ai/index.html         ShipGrade AI (single self-contained page, edit it directly)
+gen-ai-product-management/      Generative AI in Product Management: index.html, styles.css, app.js, trainer.js and
+                                course-data.json (all course content). Downloads (PDF, PPTX, MD, HTML, CSV, QR) are
+                                rebuilt with: python3 src/build-genai-pm-downloads.py (needs reportlab, python-pptx)
 src/
   shell.js                      Shared page skeleton (doctype, charset, viewport)
   hub.html                      Home page content

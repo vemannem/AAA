@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>if(!/\/$/.test(location.pathname))location.replace(location.pathname.replace(/\/index$/,"")+"/"+location.search+location.hash);</script>
+<title>Generative AI in Product Management · AAA Academy</title>
+<meta name="description" content="AAA Academy: a self-paced course for product managers and product owners. Six modules, 28 prompts, a practice lab and a worked business case, with AI in the loop and you owning the decision.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem("aaa-academy-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="top-in">
+  <a class="brand" href="#home"><span class="brand-mark">PM</span><span class="brand-txt"><span class="brand-name">Generative AI in Product Management</span><span class="brand-sub">AAA Academy · Applied Agentic AI</span></span></a>
+  <div class="top-prog">
+    <span id="progress-text">0 / 6</span><span class="bar" aria-hidden="true"><i id="progress-bar" style="width:0"></i></span>
+    <a class="comm-link" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#25D366" d="M12 1.5a10.5 10.5 0 0 0-9.06 15.8L1.5 22.5l5.36-1.4A10.5 10.5 0 1 0 12 1.5z"/><path fill="#fff" transform="translate(6.6 6.6) scale(.45)" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="cl-wide">Join the community</span><span class="cl-narrow">Community</span></a>
+    <button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">◐</button>
+  </div>
+</div></header>
+
+<div class="shell">
+  <nav class="rail" id="rail" aria-label="Course navigation">
+    <a class="hub-link" href="../"><span aria-hidden="true">←</span> All AAA Academy courses</a>
+    <div id="nav">
+      <a href="#home"><span class="wk">⌂</span><span>Course overview</span></a>
+    </div>
+    <div class="rail-label">Your learning path</div>
+    <div id="module-nav"></div>
+    <div class="rail-label">Your workspace</div>
+    <div id="nav-work">
+      <a href="#case"><span class="wk">◇</span><span>Course business case</span></a>
+      <a href="#lms"><span class="wk">▣</span><span>LMS prototype</span></a>
+      <a href="#prompts"><span class="wk">⌘</span><span>Prompt reference <span class="count">28</span></span></a>
+      <a href="#practice"><span class="wk">↗</span><span>Practice lab</span></a>
+      <a href="#resources"><span class="wk">▤</span><span>Resources &amp; downloads</span></a>
+      <a href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><span class="wk">◉</span><span>Learning community ↗</span></a>
+    </div>
+    <div class="rail-foot">
+      <div class="rail-prog"><span>Your course progress</span><strong id="progress-text-2">0 / 6</strong></div>
+      <div class="bar wide" aria-hidden="true"><i id="progress-bar-2" style="width:0"></i></div>
+      <p>Learning by doing. One better decision at a time.</p>
+      <p class="save-status">Progress saved in this browser.</p>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="picker" id="picker"></div>
+    <main id="main" tabindex="-1"><div class="panel"><p>Opening your learning studio…</p></div></main>
+    <footer class="foot"><span>AAA Academy · Applied Agentic AI</span><span>AI accelerates the work. You own the decision.</span><a href="#resources">Sources &amp; course notes</a></footer>
+  </div>
+</div>
+
+<dialog id="slide-dialog" aria-label="Presentation mode">
+  <div class="dialog-bar">
+    <span class="eyebrow">Presentation mode</span>
+    <span id="dialog-count">1 / 8</span>
+    <button class="icon-button" id="close-slides" type="button" aria-label="Close presentation mode">×</button>
+  </div>
+  <div id="dialog-slide"></div>
+  <div class="dialog-controls">
+    <button class="button secondary small" id="dialog-prev" type="button">← Previous</button>
+    <button class="button small" id="dialog-next" type="button">Next →</button>
+  </div>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><div class="panel">This course needs JavaScript to run.</div></noscript>
+<script src="trainer.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
