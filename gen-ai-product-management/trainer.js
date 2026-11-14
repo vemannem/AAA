@@ -6,12 +6,34 @@
   const synth = window.speechSynthesis;
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+  // Prefer an on-device English voice. Network voices (e.g. "Google US English" in Chrome) often stop
+  // after about 15 seconds or stay silent, so they are only used when nothing local is available.
   function pickVoice(){
     if (!synth) return null;
-    const vs = synth.getVoices().filter(v => /^en/i.test(v.lang));
-    return vs.find(v => /natural|neural|google|samantha|daniel|serena/i.test(v.name)) || vs[0] || null;
+    const all = synth.getVoices(), en = all.filter(v => /^en(-|_|$)/i.test(v.lang));
+    const local = en.filter(v => v.localService);
+    const nice = /natural|neural|samantha|daniel|serena|karen|moira|aria|jenny|guy|zira|david|mark/i;
+    return local.find(v => nice.test(v.name)) || local.find(v => /en-(US|GB)/i.test(v.lang)) || local[0] || en.find(v => v.default) || en[0] || null;
   }
-  if (synth) { voice = pickVoice(); synth.onvoiceschanged = () => { voice = pickVoice(); }; }
+  if (synth) {
+    voice = pickVoice();
+    if (synth.addEventListener) synth.addEventListener('voiceschanged', () => { voice = pickVoice(); });
+    else synth.onvoiceschanged = () => { voice = pickVoice(); };
+  }
+
+  // Short chunks keep every browser speaking: long utterances are cut off or never start on some engines.
+  function chunks(text){
+    const out = [];
+    (text.match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [text]).forEach(sentence => {
+      let t = sentence.trim();
+      while (t.length > 220) {
+        let cut = t.lastIndexOf(', ', 200); if (cut < 80) cut = t.lastIndexOf(' ', 200); if (cut < 40) cut = 200;
+        out.push(t.slice(0, cut + 1).trim()); t = t.slice(cut + 1).trim();
+      }
+      if (t) out.push(t);
+    });
+    return out;
+  }
 
   // Find the script for a key: page scripts, then module, slide, prompt, lab and quiz scripts.
   function script(key){
@@ -75,33 +97,71 @@
     });
   }
 
+  let run = 0, watchdog = null, live = [];
   function stop(){
-    if (synth) synth.cancel();
-    const was = speaking; speaking = null; queue = [];
+    run++; clearTimeout(watchdog);
+    const was = speaking; speaking = null; queue = []; live = [];
+    if (synth && (synth.speaking || synth.pending || synth.paused)) { synth.cancel(); if (synth.paused) synth.resume(); }
     mark(null, null); refreshButtons();
     if (was) setStatus(was, 'Stopped.');
   }
 
+  function utter(text){
+    const u = new SpeechSynthesisUtterance(text);
+    if (voice) u.voice = voice;
+    u.lang = (voice && voice.lang) || 'en-US';
+    u.rate = 1; u.pitch = 1; u.volume = 1;
+    live.push(u); // keep a reference so the browser does not drop the utterance mid-way
+    return u;
+  }
+
+  function noAudio(key){
+    setStatus(key, 'No sound started. Check that your device is not muted, then try Sound check. If it stays silent, open the speaker notes below to read along.');
+  }
+
   function speak(key, from){
-    if (!synth) { setStatus(key, 'Speech is not available in this browser. Open the speaker notes to read the transcript.'); return; }
+    if (!synth || typeof SpeechSynthesisUtterance === 'undefined') { setStatus(key, 'Speech is not available in this browser. Open the speaker notes to read the transcript.'); return; }
     const s = script(key); if (!s) return;
+    const busy = synth.speaking || synth.pending || synth.paused;
     stop();
+    const id = run;
     speaking = key;
-    queue = s.paragraphs.map((p, i) => ({p, i})).slice(from || 0);
+    queue = [];
+    s.paragraphs.forEach((p, i) => { if (i >= (from || 0)) chunks(p).forEach(t => queue.push({t, i})); });
+    let started = false;
     const next = () => {
-      if (speaking !== key) return;
+      if (id !== run || speaking !== key) return;
       const item = queue.shift();
       if (!item) { speaking = null; mark(null, null); refreshButtons(); setStatus(key, 'Finished. Replay any time.'); return; }
-      const u = new SpeechSynthesisUtterance(item.p);
-      if (voice) u.voice = voice;
-      u.rate = 1; u.pitch = 1;
-      u.onstart = () => { mark(key, item.i); setStatus(key, `Speaking ${item.i + 1} of ${s.paragraphs.length}`); };
-      u.onend = next;
-      u.onerror = () => { if (speaking === key) { setStatus(key, 'Playback stopped. Try Sound check, or read the speaker notes.'); speaking = null; refreshButtons(); } };
+      const u = utter(item.t);
+      u.onstart = () => { if (id !== run) return; started = true; clearTimeout(watchdog); mark(key, item.i); setStatus(key, `Speaking part ${item.i + 1} of ${s.paragraphs.length}`); };
+      u.onend = () => { if (id === run) next(); };
+      u.onerror = e => {
+        if (id !== run) return; // an older, cancelled utterance
+        if (e && (e.error === 'interrupted' || e.error === 'canceled')) return;
+        if (e && e.error === 'not-allowed') { speaking = null; refreshButtons(); setStatus(key, 'Your browser blocked the audio. Tap Listen to trainer again to allow it.'); return; }
+        next(); // skip a chunk the engine could not say and carry on
+      };
       synth.speak(u);
+      if (synth.paused) synth.resume();
     };
     refreshButtons();
-    next();
+    setStatus(key, 'Starting the trainer…');
+    // Chrome drops a speak() issued straight after cancel(), so wait a moment only when something was playing.
+    if (busy) setTimeout(() => { if (id === run) next(); }, 120); else next();
+    clearTimeout(watchdog);
+    watchdog = setTimeout(() => {
+      if (id !== run || started) return;
+      if (synth.speaking) return; // engine is working but gave no start event
+      voice = null; // retry once with the browser's default voice
+      const retryKey = key; stop();
+      speaking = retryKey; const id2 = run; refreshButtons();
+      const u = utter('Starting the trainer.');
+      u.onstart = () => { if (id2 === run) { speaking = null; speak(retryKey, from); } };
+      u.onerror = () => { if (id2 === run) { speaking = null; refreshButtons(); noAudio(retryKey); } };
+      synth.speak(u);
+      watchdog = setTimeout(() => { if (id2 === run && !synth.speaking) { speaking = null; refreshButtons(); noAudio(retryKey); } }, 3000);
+    }, 2500);
   }
 
   document.addEventListener('click', e => {
@@ -109,7 +169,7 @@
     const box = b.closest('.trainer'), key = box && box.dataset.trainerKey; if (!key) return;
     const act = b.dataset.trainer;
     if (act === 'listen') {
-      if (speaking === key && synth) {
+      if (speaking === key && synth && (synth.speaking || synth.paused)) {
         if (synth.paused) { synth.resume(); setStatus(key, 'Resumed.'); } else { synth.pause(); setStatus(key, 'Paused.'); }
         refreshButtons(); return;
       }
@@ -118,13 +178,16 @@
     if (act === 'replay') speak(key, 0);
     if (act === 'stop') stop();
     if (act === 'check') {
-      if (!synth) { setStatus(key, 'Speech is not available in this browser.'); return; }
+      if (!synth || typeof SpeechSynthesisUtterance === 'undefined') { setStatus(key, 'Speech is not available in this browser.'); return; }
       stop();
-      const u = new SpeechSynthesisUtterance('Sound check. If you can hear this, your trainer audio is working.');
-      if (voice) u.voice = voice;
-      u.onend = () => setStatus(key, 'Sound check finished. If you heard nothing, check your volume or device output.');
+      const id = run, u = utter('Sound check. If you can hear this, your trainer audio is working.');
+      let ok = false;
+      u.onstart = () => { ok = true; setStatus(key, 'Playing a short sound check…'); };
+      u.onend = () => { if (id === run) setStatus(key, 'Sound check finished. If you heard nothing, check your volume or device output.'); };
+      u.onerror = e => { if (id === run && !(e && /interrupted|canceled/.test(e.error))) noAudio(key); };
       setStatus(key, 'Playing a short sound check…');
       synth.speak(u);
+      watchdog = setTimeout(() => { if (id === run && !ok && !synth.speaking) noAudio(key); }, 3000);
     }
   });
 
