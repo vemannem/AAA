@@ -66,14 +66,19 @@ footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-
 .join .txt{flex:1 1 320px;display:flex;flex-direction:column;gap:4px}
 .join h2{font-size:20px;color:var(--ink)}
 .join p{color:var(--muted)}
-.join .go{margin-top:0;align-self:center;background:var(--ok);color:var(--accent-ink)}
+.wa-ic{width:16px;height:16px;flex:none;display:inline-block;vertical-align:-3px}
+.comm-link{display:inline-flex;align-items:center;gap:6px}
+.join .wa-big{width:44px;height:44px}
+.join .go{margin-top:0;align-self:center;background:#25D366;color:#06301b}
+.join .go .wa-ic{width:20px;height:20px}
+.foot-wa{display:inline-flex;align-items:center;gap:5px;vertical-align:bottom}
 footer a{color:var(--muted)}
 </style>
 
 <header class="top"><div class="wrap">
   <span class="mark">AAA</span>
   <div style="min-width:0"><div class="brand">AAA Academy</div><div class="brand-sub">Applied Agentic AI</div></div>
-  <a class="comm-link" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><span class="cl-wide">Join the community</span><span class="cl-narrow">Community</span></a>
+  <a class="comm-link" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#25D366" d="M12 1.5a10.5 10.5 0 0 0-9.06 15.8L1.5 22.5l5.36-1.4A10.5 10.5 0 1 0 12 1.5z"/><path fill="#fff" transform="translate(6.6 6.6) scale(.45)" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span class="cl-wide">Join the community</span><span class="cl-narrow">Community</span></a>
   <button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
 </div></header>
 
@@ -104,11 +109,12 @@ footer a{color:var(--muted)}
   </section>
 
   <section class="join" aria-label="Community">
+    <svg class="wa-ic wa-big" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#25D366" d="M12 1.5a10.5 10.5 0 0 0-9.06 15.8L1.5 22.5l5.36-1.4A10.5 10.5 0 1 0 12 1.5z"/><path fill="#fff" transform="translate(6.6 6.6) scale(.45)" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
     <div class="txt">
       <h2>Join our WhatsApp community</h2>
       <p>Ask questions, share what you build, and learn alongside other AAA Academy members.</p>
     </div>
-    <a class="go" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener">Join on WhatsApp <span aria-hidden="true">→</span></a>
+    <a class="go" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#fff" d="M12 1.5a10.5 10.5 0 0 0-9.06 15.8L1.5 22.5l5.36-1.4A10.5 10.5 0 1 0 12 1.5z"/><path fill="#25D366" transform="translate(6.6 6.6) scale(.45)" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Join on WhatsApp <span aria-hidden="true">→</span></a>
   </section>
 
   <div class="path">
@@ -124,7 +130,7 @@ footer a{color:var(--muted)}
   </section>
 </main>
 
-<footer><div class="wrap">AAA Academy, Applied Agentic AI. Course progress is saved in each course page, in this browser only. <a href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener">Join our WhatsApp community</a>.</div></footer>
+<footer><div class="wrap">AAA Academy, Applied Agentic AI. Course progress is saved in each course page, in this browser only. <a href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener" class="foot-wa"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#25D366" d="M12 1.5a10.5 10.5 0 0 0-9.06 15.8L1.5 22.5l5.36-1.4A10.5 10.5 0 1 0 12 1.5z"/><path fill="#fff" transform="translate(6.6 6.6) scale(.45)" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Join our WhatsApp community</a>.</div></footer>
 
 <script>
 (function(){
