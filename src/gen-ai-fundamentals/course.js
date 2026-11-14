@@ -3,7 +3,7 @@ name: "Gen AI Fundamentals",
 hubUrl: "",
 tagline: "Learn how large language models really work, then build with them. Python and engineering foundations, then tokens, embeddings and attention from scratch, a tiny GPT you train yourself, decoding, post-training, prompt engineering, LoRA, RAG, agents, multi-agent systems, reasoning models and the main agent frameworks. Fourteen self-paced weeks (week 0 to week 13), every lesson with a diagram, a demo, a lab you can run in Google Colab or on your own machine, a quick check and a tutor prompt.",
 weeks: [],
-footer: "Gen AI Fundamentals · AAA Academy, Applied Agentic AI. Your progress is saved in this browser only; clearing site data resets it.",
+footer: "Gen AI Fundamentals · AAA Academy, Applied Agentic AI. Your progress is saved in this browser only; clearing site data resets it. <a href=\"https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4\" target=\"_blank\" rel=\"noopener\">Join our WhatsApp community</a> to ask questions and learn with other members.",
 method: [
   ["1. Read", "A short explanation, the math in plain words, and a real-world example. 10 to 15 minutes."],
   ["2. See it", "Study the diagram, then run the demo script and read what it prints."],

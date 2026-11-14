@@ -57,11 +57,22 @@ p{margin:0}
 .how h3{font-size:15px}
 .how p{font-size:14px;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--muted)}
+.comm-link{margin-left:auto;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.comm-link + .theme-btn{margin-left:0}
+.comm-link .cl-narrow{display:none}
+@media (max-width:480px){.comm-link .cl-wide{display:none}.comm-link .cl-narrow{display:inline}}
+.join{background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 30%,transparent);border-radius:var(--r);padding:20px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-bottom:20px}
+.join .txt{flex:1 1 320px;display:flex;flex-direction:column;gap:4px}
+.join h2{font-size:20px;color:var(--ink)}
+.join p{color:var(--muted)}
+.join .go{margin-top:0;align-self:center;background:var(--ok);color:var(--accent-ink)}
+footer a{color:var(--muted)}
 </style>
 
 <header class="top"><div class="wrap">
   <span class="mark">AAA</span>
   <div style="min-width:0"><div class="brand">AAA Academy</div><div class="brand-sub">Applied Agentic AI</div></div>
+  <a class="comm-link" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><span class="cl-wide">Join the community</span><span class="cl-narrow">Community</span></a>
   <button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
 </div></header>
 
@@ -91,6 +102,14 @@ footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-
     </article>
   </section>
 
+  <section class="join" aria-label="Community">
+    <div class="txt">
+      <h2>Join our WhatsApp community</h2>
+      <p>Ask questions, share what you build, and learn alongside other AAA Academy members.</p>
+    </div>
+    <a class="go" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener">Join on WhatsApp <span aria-hidden="true">→</span></a>
+  </section>
+
   <div class="path">
     <b>Suggested path</b>
     <p>New to LLMs? Take Gen AI Fundamentals first for the internals and core building blocks, then ShipGrade AI to make them production-ready. Already building with LLMs? You can start with either.</p>
@@ -104,7 +123,7 @@ footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-
   </section>
 </main>
 
-<footer><div class="wrap">AAA Academy, Applied Agentic AI. Course progress is saved in each course page, in this browser only.</div></footer>
+<footer><div class="wrap">AAA Academy, Applied Agentic AI. Course progress is saved in each course page, in this browser only. <a href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener">Join our WhatsApp community</a>.</div></footer>
 
 <script>
 (function(){

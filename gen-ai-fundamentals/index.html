@@ -210,9 +210,12 @@ pre.code code{background:none;padding:0;font-size:inherit;color:inherit}
 .lq{background:var(--surface-2);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .lq .q{background:var(--surface)}
 .math{font-family:var(--f-mono);font-size:13.5px;background:var(--surface-2);border-radius:8px;padding:10px 12px;overflow-x:auto;white-space:pre}
+.comm-link{font-weight:600;text-decoration:none;white-space:nowrap;color:var(--accent)}
+.comm-link .cl-narrow{display:none}
+@media (max-width:600px){.comm-link .cl-wide{display:none}.comm-link .cl-narrow{display:inline}#topbar-pct{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<header class="top"><div class="top-in"><a class="brand" href="#home"><span class="brand-mark">GA</span><span style="min-width:0;display:flex;flex-direction:column"><span class="brand-name">Gen AI Fundamentals</span><span class="brand-sub">AAA Academy · Applied Agentic AI</span></span></a><div class="top-prog"><span id="topbar-pct">0% complete</span><span class="bar"><i id="topbar-fill" style="width:0"></i></span><button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">◐</button></div></div></header>
+<header class="top"><div class="top-in"><a class="brand" href="#home"><span class="brand-mark">GA</span><span style="min-width:0;display:flex;flex-direction:column"><span class="brand-name">Gen AI Fundamentals</span><span class="brand-sub">AAA Academy · Applied Agentic AI</span></span></a><div class="top-prog"><span id="topbar-pct">0% complete</span><span class="bar"><i id="topbar-fill" style="width:0"></i></span><a class="comm-link" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><span class="cl-wide">Join the community</span><span class="cl-narrow">Community</span></a><button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">◐</button></div></div></header>
 <div class="shell"><nav class="rail" id="rail" aria-label="Weeks"></nav><main><div class="picker" id="picker"></div><div class="page" id="page"></div></main></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>
@@ -221,7 +224,7 @@ name: "Gen AI Fundamentals",
 hubUrl: "../",
 tagline: "Learn how large language models really work, then build with them. Python and engineering foundations, then tokens, embeddings and attention from scratch, a tiny GPT you train yourself, decoding, post-training, prompt engineering, LoRA, RAG, agents, multi-agent systems, reasoning models and the main agent frameworks. Fourteen self-paced weeks (week 0 to week 13), every lesson with a diagram, a demo, a lab you can run in Google Colab or on your own machine, a quick check and a tutor prompt.",
 weeks: [],
-footer: "Gen AI Fundamentals · AAA Academy, Applied Agentic AI. Your progress is saved in this browser only; clearing site data resets it.",
+footer: "Gen AI Fundamentals · AAA Academy, Applied Agentic AI. Your progress is saved in this browser only; clearing site data resets it. <a href=\"https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4\" target=\"_blank\" rel=\"noopener\">Join our WhatsApp community</a> to ask questions and learn with other members.",
 method: [
   ["1. Read", "A short explanation, the math in plain words, and a real-world example. 10 to 15 minutes."],
   ["2. See it", "Study the diagram, then run the demo script and read what it prints."],

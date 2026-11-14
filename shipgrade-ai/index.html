@@ -202,9 +202,12 @@ pre.code code{background:none;padding:0;font-size:inherit;color:inherit}
 .rubric td:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
 .srctable td:first-child{white-space:nowrap;font-weight:600}
 .foot-credit{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+.comm-link{font-weight:600;text-decoration:none;white-space:nowrap;color:var(--accent)}
+.comm-link .cl-narrow{display:none}
+@media (max-width:600px){.comm-link .cl-wide{display:none}.comm-link .cl-narrow{display:inline}#topbar-pct{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<header class="top"><div class="top-in"><a class="brand" href="#home"><span class="brand-mark">SG</span><span style="min-width:0;display:flex;flex-direction:column"><span class="brand-name">ShipGrade AI</span><span class="brand-sub">AAA Academy · Applied Agentic AI</span></span></a><div class="top-prog"><span id="topbar-pct">0% complete</span><span class="bar"><i id="topbar-fill" style="width:0"></i></span><button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">◐</button></div></div></header>
+<header class="top"><div class="top-in"><a class="brand" href="#home"><span class="brand-mark">SG</span><span style="min-width:0;display:flex;flex-direction:column"><span class="brand-name">ShipGrade AI</span><span class="brand-sub">AAA Academy · Applied Agentic AI</span></span></a><div class="top-prog"><span id="topbar-pct">0% complete</span><span class="bar"><i id="topbar-fill" style="width:0"></i></span><a class="comm-link" href="https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4" target="_blank" rel="noopener"><span class="cl-wide">Join the community</span><span class="cl-narrow">Community</span></a><button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">◐</button></div></div></header>
 <div class="shell"><nav class="rail" id="rail" aria-label="Weeks"></nav><main><div class="picker" id="picker"></div><div class="page" id="page"></div></main></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>
@@ -212,7 +215,7 @@ window.COURSE = {
 name: "ShipGrade AI",
 tagline: "Take AI from a notebook demo to a system people can trust: reliable services, grounded retrieval, fast and cheap inference, measured quality, real security, and agents that scale with a human in the loop. Six self-paced weeks, every lesson with a diagram, a demo, a lab and a tutor check.",
 weeks: [],
-footer: "ShipGrade AI · AAA Academy, Applied Agentic AI. Your progress is saved in this browser only; clearing site data resets it.",
+footer: "ShipGrade AI · AAA Academy, Applied Agentic AI. Your progress is saved in this browser only; clearing site data resets it. <a href=\"https://chat.whatsapp.com/IA5P0yMb7c9AuLn22ND2t4\" target=\"_blank\" rel=\"noopener\">Join our WhatsApp community</a> to ask questions and learn with other members.",
 method: [
   ["1. Read", "Short explanation and a real company example. 10 to 15 minutes per lesson."],
   ["2. See it", "Study the diagram, then run the demo script and read its output."],
