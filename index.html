@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>AAA Academy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="AAA Academy, Applied Agentic AI: self-paced courses for learning how AI works and shipping it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --surface-2:#eef1f5; --ink:#141a24; --muted:#586273; --line:#dce1e8;
+  --accent:#1f56c9; --accent-ink:#ffffff; --accent-soft:#e3ebfb; --signal:#b8661a; --signal-soft:#fbeedd;
+  --ok:#1b7f52; --ok-soft:#ddf2e7;
+  --f-display:"Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1b2432; --ink:#e5e9f0; --muted:#9aa4b4; --line:#273244;
+  --accent:#6f9bff; --accent-ink:#0b1220; --accent-soft:#1c2a47; --signal:#f0a650; --signal-soft:#3a2a17;
+  --ok:#4fc58a; --ok-soft:#163327; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0e131b; --surface:#151c27; --surface-2:#1b2432; --ink:#e5e9f0; --muted:#9aa4b4; --line:#273244;
+  --accent:#6f9bff; --accent-ink:#0b1220; --accent-soft:#1c2a47; --signal:#f0a650; --signal-soft:#3a2a17;
+  --ok:#4fc58a; --ok-soft:#163327; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.65 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+a{color:var(--accent)}
+h1,h2,h3{font-family:var(--f-display);line-height:1.2;text-wrap:balance;margin:0}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font:600 11.5px/1 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px}
+.mark{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font:700 12px var(--f-display);flex:none}
+.brand{font:700 17px var(--f-display)}
+.brand-sub{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.theme-btn{margin-left:auto;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 9px;font:inherit;font-size:13px;cursor:pointer}
+.hero{padding-block:48px 28px;display:flex;flex-direction:column;gap:14px;max-width:720px}
+.hero h1{font-size:clamp(30px,5vw,48px);letter-spacing:-.02em}
+.hero p{font-size:17px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;padding-bottom:28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:14px}
+.card .step{display:flex;align-items:center;gap:10px}
+.num{font:600 12px var(--f-mono);color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:3px 10px}
+.card h2{font-size:clamp(22px,3vw,28px);letter-spacing:-.01em}
+.card .one{font-size:16px;font-weight:500}
+.card .more{color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.facts li{font-size:12.5px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted);background:var(--surface-2)}
+.go{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:600;border-radius:9px;padding:10px 16px}
+.go:hover{filter:brightness(1.08)}
+.path{background:var(--signal-soft);border:1px solid color-mix(in srgb,var(--signal) 30%,transparent);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:6px;margin-bottom:28px}
+.path b{color:var(--signal)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px;padding-bottom:56px}
+.how div{border-top:2px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:4px}
+.how h3{font-size:15px}
+.how p{font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:20px calc(20px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--muted)}
+</style>
+
+<header class="top"><div class="wrap">
+  <span class="mark">AAA</span>
+  <div style="min-width:0"><div class="brand">AAA Academy</div><div class="brand-sub">Applied Agentic AI</div></div>
+  <button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="eyebrow">Self-paced courses</span>
+    <h1>Learn how AI works, then ship it.</h1>
+    <p>Each course runs week by week at your own pace. Every lesson has a diagram, a runnable demo, a hands-on lab, a quick check and a tutor prompt, and your progress is saved in your browser.</p>
+  </section>
+
+  <section class="grid" aria-label="Courses">
+    <article class="card">
+      <div class="step"><span class="num">Course 1</span><span class="eyebrow">Start here</span></div>
+      <h2>Gen AI Fundamentals</h2>
+      <p class="one">How large language models work inside, from tokens and attention to agents, multi-agent systems and agent frameworks.</p>
+      <p class="more">Start with Python and engineering basics, build tokenizers, embeddings and self-attention from scratch, train a tiny GPT, then move on to prompt engineering, LoRA, RAG, agents, reasoning models, and LangGraph, the OpenAI Agents SDK and CrewAI.</p>
+      <ul class="facts"><li>14 weeks</li><li>Colab or local</li><li>numpy, PyTorch, Claude API</li><li>Capstone: ResearchMate</li></ul>
+      <a class="go" href="gen-ai-fundamentals/">Open course <span aria-hidden="true">→</span></a>
+    </article>
+    <article class="card">
+      <div class="step"><span class="num">Course 2</span><span class="eyebrow">Production</span></div>
+      <h2>ShipGrade AI</h2>
+      <p class="one">Take AI from a notebook demo to a production-grade system people can trust.</p>
+      <p class="more">Reliable services, grounded retrieval, fast and cheap inference, measured quality, real security, and agents that scale with a human in the loop.</p>
+      <ul class="facts"><li>6 weeks</li><li>Hands-on labs</li><li>Production patterns</li><li>Capstone project</li></ul>
+      <a class="go" href="shipgrade-ai/">Open course <span aria-hidden="true">→</span></a>
+    </article>
+  </section>
+
+  <div class="path">
+    <b>Suggested path</b>
+    <p>New to LLMs? Take Gen AI Fundamentals first for the internals and core building blocks, then ShipGrade AI to make them production-ready. Already building with LLMs? You can start with either.</p>
+  </div>
+
+  <section class="how" aria-label="How every course works">
+    <div><h3>Learn</h3><p>Short lessons in plain language, with a diagram and a real-world example for every idea.</p></div>
+    <div><h3>Practice</h3><p>Runnable demos and labs, in Google Colab or set up on your own machine.</p></div>
+    <div><h3>Check</h3><p>A quick check after each lesson and a weekly quiz with explanations.</p></div>
+    <div><h3>Get tutored</h3><p>Copy a ready-made tutor prompt into Claude to be quizzed and coached on each topic.</p></div>
+  </section>
+</main>
+
+<footer><div class="wrap">AAA Academy, Applied Agentic AI. Course progress is saved in each course page, in this browser only.</div></footer>
+
+<script>
+(function(){
+  var KEY = "aaa-academy-theme", root = document.documentElement;
+  function get(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function set(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var t = get(); if (t === "light" || t === "dark") root.setAttribute("data-theme", t);
+  document.getElementById("theme").addEventListener("click", function(){
+    var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var next = cur === "dark" ? "light" : "dark"; root.setAttribute("data-theme", next); set(next);
+  });
+})();
+</script>
+</body></html>
