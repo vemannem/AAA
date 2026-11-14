@@ -4,12 +4,22 @@
   'use strict';
   let course = null, api = null, speaking = null, queue = [], voice = null;
   const synth = window.speechSynthesis;
+  // iPhone and iPad: every browser there (Chrome included) uses Apple's WebKit speech engine.
+  const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  // A tiny silent clip played inside the tap moves iOS audio to the media channel, which keeps
+  // speech audible when the phone's Silent switch is on.
+  const SILENT = 'data:audio/wav;base64,UklGRmQGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA';
+  let unlocked = false;
+  function unlock(){
+    if (unlocked || !IOS) return; unlocked = true;
+    try { const a = new Audio(SILENT); a.setAttribute('playsinline', ''); const p = a.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+  }
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   // Prefer an on-device English voice. Network voices (e.g. "Google US English" in Chrome) often stop
   // after about 15 seconds or stay silent, so they are only used when nothing local is available.
   function pickVoice(){
-    if (!synth) return null;
+    if (!synth || IOS) return null; // on iOS a chosen voice object can make speech silent; let the system pick by language
     const all = synth.getVoices(), en = all.filter(v => /^en(-|_|$)/i.test(v.lang));
     const local = en.filter(v => v.localService);
     const nice = /natural|neural|samantha|daniel|serena|karen|moira|aria|jenny|guy|zira|david|mark/i;
@@ -101,7 +111,7 @@
   function stop(){
     run++; clearTimeout(watchdog);
     const was = speaking; speaking = null; queue = []; live = [];
-    if (synth && (synth.speaking || synth.pending || synth.paused)) { synth.cancel(); if (synth.paused) synth.resume(); }
+    if (synth && (synth.speaking || synth.pending || synth.paused)) { const p = synth.paused; synth.cancel(); if (p) synth.resume(); }
     mark(null, null); refreshButtons();
     if (was) setStatus(was, 'Stopped.');
   }
@@ -116,7 +126,9 @@
   }
 
   function noAudio(key){
-    setStatus(key, 'No sound started. Check that your device is not muted, then try Sound check. If it stays silent, open the speaker notes below to read along.');
+    setStatus(key, IOS
+      ? 'No sound started. On iPhone, turn the Silent switch off (no orange showing), turn the volume up, then tap Listen again. Speaker notes below have the full script.'
+      : 'No sound started. Check that your device is not muted, then try Sound check. If it stays silent, open the speaker notes below to read along.');
   }
 
   function speak(key, from){
@@ -148,11 +160,13 @@
     refreshButtons();
     setStatus(key, 'Starting the trainer…');
     // Chrome drops a speak() issued straight after cancel(), so wait a moment only when something was playing.
-    if (busy) setTimeout(() => { if (id === run) next(); }, 120); else next();
+    // iOS needs speak() inside the tap itself, and handles cancel-then-speak fine, so never wait there.
+    if (busy && !IOS) setTimeout(() => { if (id === run) next(); }, 120); else next();
     clearTimeout(watchdog);
     watchdog = setTimeout(() => {
       if (id !== run || started) return;
       if (synth.speaking) return; // engine is working but gave no start event
+      if (IOS) { stop(); setStatus(key, ''); noAudio(key); return; } // a retry from a timer would be blocked on iOS
       voice = null; // retry once with the browser's default voice
       const retryKey = key; stop();
       speaking = retryKey; const id2 = run; refreshButtons();
@@ -168,6 +182,7 @@
     const b = e.target.closest('[data-trainer]'); if (!b) return;
     const box = b.closest('.trainer'), key = box && box.dataset.trainerKey; if (!key) return;
     const act = b.dataset.trainer;
+    if (act !== 'stop') unlock();
     if (act === 'listen') {
       if (speaking === key && synth && (synth.speaking || synth.paused)) {
         if (synth.paused) { synth.resume(); setStatus(key, 'Resumed.'); } else { synth.pause(); setStatus(key, 'Paused.'); }
